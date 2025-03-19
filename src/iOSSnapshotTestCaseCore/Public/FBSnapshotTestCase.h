@@ -135,6 +135,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (readwrite, nonatomic, assign) BOOL recordMode;
 
+/**
+ When YES, will cause hightlighting different fixels on test failure.
+ */
+@property (readwrite, nonatomic, assign) BOOL highlightDifferentPixels;
 
 /**
  The bundleResourcePath can be manually set to the root folder where reference images are stored.

@@ -58,6 +58,11 @@ extern NSString *const FBDiffedImageKey;
 @property (readwrite, nonatomic, assign) BOOL recordMode;
 
 /**
+ Highlight Different Pixels.
+ */
+@property (readwrite, nonatomic, assign) BOOL highlightDifferentPixels;
+
+/**
  The bundleResourcePath can be manually set to the root folder where reference images are stored.
  */
 @property (readwrite, nonatomic, copy, nullable) NSString *bundleResourcePath;
@@ -176,12 +181,14 @@ extern NSString *const FBDiffedImageKey;
  @param image The image to test against the reference.
  @param overallTolerance The percentage of pixels that can differ and still be considered 'identical'.
  @param errorPtr An error that indicates why the comparison failed if it does.
+ @param differentPixels An array of different pixel numbers.
  @returns YES if the comparison succeeded and the images are the same(ish).
  */
 - (BOOL)compareReferenceImage:(UIImage *)referenceImage
                       toImage:(UIImage *)image
              overallTolerance:(CGFloat)overallTolerance
-                        error:(NSError **)errorPtr;
+                        error:(NSError **)errorPtr
+              differentPixels:(NSMutableArray *_Nullable*_Nullable)differentPixels;
 
 /**
  Performs a pixel-by-pixel comparison of the two images with an allowable margin of error.
@@ -190,13 +197,15 @@ extern NSString *const FBDiffedImageKey;
  @param perPixelTolerance The percentage a given pixel's R,G,B and A components can differ and still be considered 'identical'.
  @param overallTolerance The percentage of pixels that can differ and still be considered 'identical'.
  @param errorPtr An error that indicates why the comparison failed if it does.
+ @param differentPixels An array of different pixel numbers.
  @returns YES if the comparison succeeded and the images are the same(ish).
  */
 - (BOOL)compareReferenceImage:(UIImage *)referenceImage
                       toImage:(UIImage *)image
             perPixelTolerance:(CGFloat)perPixelTolerance
              overallTolerance:(CGFloat)overallTolerance
-                        error:(NSError **)errorPtr;
+                        error:(NSError **)errorPtr
+              differentPixels:( NSMutableArray *_Nullable*_Nullable)differentPixels;
 
 /**
  Saves the reference image and the test image to `failedOutputDirectory`.
@@ -211,7 +220,8 @@ extern NSString *const FBDiffedImageKey;
                        testImage:(UIImage *)testImage
                         selector:(SEL)selector
                       identifier:(nullable NSString *)identifier
-                           error:(NSError **)errorPtr;
+                           error:(NSError **)errorPtr
+                 differentPixels:(NSArray *)differentPixels;
 @end
 
 NS_ASSUME_NONNULL_END
